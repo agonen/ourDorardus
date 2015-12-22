@@ -1,0 +1,53 @@
+
+	alert_id BIGINT,
+	alert_start_time timestamp without time zone,	
+	delivery_method CHARACTER VARYING,
+	destination_email CHARACTER VARYING,
+	destination_ip CHARACTER VARYING,	
+	destination_port INTEGER,
+	file_mime_type CHARACTER VARYING,
+	file_name CHARACTER VARYING,
+	hash_id CHARACTER VARYING,
+	
+	policy_name CHARACTER VARYING,
+	co_id_server INTEGER,
+	co_id_client INTEGER,
+	
+	protocol CHARACTER VARYING,
+	
+	risk CHARACTER VARYING,
+	
+	source_email CHARACTER VARYING,
+	source_ip CHARACTER VARYING,	
+	source_port INTEGER,
+	
+	alert_type CHARACTER VARYING,
+	
+	confidence DOUBLE PRECISION,
+	
+	malware_name CHARACTER VARYING,
+	correlation_id CHARACTER VARYING,
+	
+	destination_host CHARACTER VARYING,
+	
+	ipgl_client_country CHARACTER VARYING,
+	ipgl_client_region CHARACTER VARYING,
+	ipgl_client_city CHARACTER VARYING,
+	ipgl_client_postal_code CHARACTER VARYING,
+	ipgl_client_longitude NUMERIC(8, 5),
+	ipgl_client_latitude NUMERIC(8, 5),
+	ipgl_client_isp_name CHARACTER VARYING,
+	ipgl_client_organization_name CHARACTER VARYING,
+	ipgl_client_autonomous_system_number BIGINT,
+	ipgl_client_autonomous_system_name CHARACTER VARYING,
+	ipgl_server_country CHARACTER VARYING,
+	ipgl_server_region CHARACTER VARYING,
+	ipgl_server_city CHARACTER VARYING,
+	ipgl_server_postal_code CHARACTER VARYING,
+	ipgl_server_longitude NUMERIC(8, 5),
+	ipgl_server_latitude NUMERIC(8, 5),
+	ipgl_server_isp_name CHARACTER VARYING,
+	ipgl_server_organization_name CHARACTER VARYING,
+	ipgl_server_autonomous_system_number BIGINT,
+	ipgl_server_autonomous_system_name CHARACTER VARYING,
+	url_categorization CHARACTER VARYING[]
