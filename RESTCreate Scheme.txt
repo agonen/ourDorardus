@@ -1,0 +1,59 @@
+http://localhost:1123/_applications
+
+
+
+{"TTLP": {
+    "key": "AlertsKey",
+    "options": {"StorageService": "OLAPService"},
+    "tables": {
+        "Alerts": {
+            "fields": {				
+                "alert_id": {"type": "LONG"},
+				"alert_start_time": {"type": "TIMESTAMP"},
+                "delivery_method": {"type": "TEXT"},
+				"destination_email": {"type": "TEXT"},
+				"destination_ip": {"type": "TEXT"},
+				"destination_port": {"type": "INTEGER"},
+				"file_mime_type": {"type": "TEXT"},
+				"file_name": {"type": "TEXT"},
+				"hash_id": {"type": "TEXT"},
+				"policy_name": {"type": "TEXT"},
+				"co_id_server": {"type": "INTEGER"},
+				"co_id_client": {"type": "INTEGER"},
+				"protocol": {"type": "TEXT"},
+				"risk": {"type": "TEXT"},
+				"source_email": {"type": "TEXT"},
+				"source_ip": {"type": "TEXT"},
+				"source_port": {"type": "INTEGER"},
+				"alert_type": {"type": "TEXT"},
+				"confidence": {"type": "FLOAT"},
+				"malware_name": {"type": "TEXT"},
+				"correlation_id": {"type": "TEXT"},
+				"destination_host": {"type": "TEXT"},
+				"ipgl_client_country": {"type": "TEXT"},
+				"ipgl_client_region": {"type": "TEXT"},
+				"ipgl_client_city": {"type": "TEXT"},
+				"ipgl_client_postal_code": {"type": "TEXT"},
+				"ipgl_client_longitude": {"type": "DOUBLE"},
+				"ipgl_client_latitude": {"type": "DOUBLE"},
+				"ipgl_client_isp_name": {"type": "TEXT"},
+				"ipgl_client_organization_name": {"type": "TEXT"},
+				"ipgl_client_autonomous_system_number": {"type": "LONG"},
+				"ipgl_client_autonomous_system_name": {"type": "TEXT"},
+				"ipgl_server_country": {"type": "TEXT"},
+				"ipgl_server_region": {"type": "TEXT"},
+				"ipgl_server_city": {"type": "TEXT"},
+				"ipgl_server_postal_code": {"type": "TEXT"},
+				"ipgl_server_longitude": {"type": "DOUBLE"},
+				"ipgl_server_latitude": {"type": "DOUBLE"},
+				"ipgl_server_isp_name": {"type": "TEXT"},
+				"ipgl_server_organization_name": {"type": "TEXT"},
+				"ipgl_server_autonomous_system_number": {"type": "LONG"},
+				"ipgl_server_autonomous_system_name": {"type": "TEXT"},
+				"url_categorization": {"type": "TEXT"}
+	            }
+            }
+        }
+    
+    }
+}
