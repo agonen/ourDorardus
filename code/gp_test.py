@@ -13,7 +13,9 @@ cur.execute("select alert_id, alert_start_time, delivery_method, destination_ema
 batch_size=10000
 #a = cur.fetchall()
 a = cur.fetchmany(batch_size)
+index = 0
 while a is not None:
+    index +=1
     insert_list = []
     j={"doc": {"_table": "Alerts"}}
     for i in a:
@@ -89,6 +91,6 @@ while a is not None:
 
     resp = requests.post(url='http://10.61.40.33:1123/TTLP/shard3',headers={'Content-Type': 'application/json'},json=batch_cmd)
     resp = requests.post(url='http://10.61.40.33:1123/TTLP/_shards/shard3',headers={'Content-Type': 'application/json'})
-    print resp.raise_for_status()
+    print "Iteration: {0}, Num of records per Iteration {1}, Msg {2}".format(index, batch_size, resp.raise_for_status())
     a = cur.fetchmany(batch_size)
 
