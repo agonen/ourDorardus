@@ -1,13 +1,9 @@
-http://localhost:1123/_applications
-
-
-
-{"TTLP": {
+curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -H "Postman-Token: 9af727b6-fed6-0ee0-ea5c-df9fd0cb76bf" -d '{"TTLP": {
     "key": "AlertsKey",
     "options": {"StorageService": "OLAPService"},
     "tables": {
         "Alerts": {
-            "fields": {				
+            "fields": {
                 "alert_id": {"type": "LONG"},
 				"alert_start_time": {"type": "TIMESTAMP"},
                 "delivery_method": {"type": "TEXT"},
@@ -54,6 +50,6 @@ http://localhost:1123/_applications
 	            }
             }
         }
-    
+
     }
-}
+}' 'http://localhost:1123/_applications'
