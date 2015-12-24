@@ -1,13 +1,21 @@
+<<<<<<< HEAD
 http://localhost:1123/_applications
 
 
 
 {"TTLP": {
+=======
+curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -H "Postman-Token: 9af727b6-fed6-0ee0-ea5c-df9fd0cb76bf" -d '{"TTLP": {
+>>>>>>> origin/master
     "key": "AlertsKey",
     "options": {"StorageService": "OLAPService"},
     "tables": {
         "Alerts": {
+<<<<<<< HEAD
             "fields": {				
+=======
+            "fields": {
+>>>>>>> origin/master
                 "alert_id": {"type": "LONG"},
 				"alert_start_time": {"type": "TIMESTAMP"},
                 "delivery_method": {"type": "TEXT"},
@@ -54,6 +62,12 @@ http://localhost:1123/_applications
 	            }
             }
         }
+<<<<<<< HEAD
     
     }
 }
+=======
+
+    }
+}' 'http://localhost:1123/_applications'
+>>>>>>> origin/master
