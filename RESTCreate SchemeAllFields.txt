@@ -1,0 +1,82 @@
+http://localhost:1123/_applications
+
+
+
+{"TTLP": {
+    "key": "AlertsKey",
+    "options": {"StorageService": "OLAPService"},
+    "tables": {
+        "Alerts": {
+            "fields": {				
+                	"alert_id": {"type": "LONG"},
+	"alert_start_time": {"type": "TIMESTAMP"},
+	"insert_time": {"type": "TIMESTAMP"},
+	"attack_name": {"type": "TEXT"},
+	"attack_status": {"type": "TEXT"},
+	"bandwidth": {"type": "TEXT"},
+	"class_type": {"type": "INTEGER"},
+	"context": {"type": "TEXT"},
+	"delivery_method": {"type": "TEXT"},
+	"destination_email": {"type": "TEXT"},
+	"destination_ip": {"type": "LONG"},
+	"destination_ip6": {"type": "TEXT"},
+	"destination_port": {"type": "INTEGER"},
+	"file_mime_type": {"type": "TEXT"},
+	"file_name": {"type": "TEXT"},
+	"hash_id": {"type": "TEXT"},
+	"packet_count": {"type": "INTEGER"},
+	"policy_name": {"type": "TEXT"},
+	"protocol": {"type": "TEXT"},
+	"reference_cve": {"type": "TEXT"},
+	"risk": {"type": "TEXT"},
+	"sid": {"type": "INTEGER"},
+	"sid_rev": {"type": "INTEGER"},
+	"source_email": {"type": "TEXT"},
+	"source_ip": {"type": "LONG"},
+	"source_ip6": {"type": "TEXT"},
+	"source_port": {"type": "INTEGER"},
+	"alert_type": {"type": "TEXT"},
+	"bl_direction": {"type": "TEXT"},
+	"category": {"type": "TEXT"},
+	"co_id": {"type": "INTEGER"},
+	"confidence": {"type": ""FLOAT""},
+	"device_ip": {"type": "TEXT"},
+	"device_name": {"type": "TEXT"},
+	"malware_name": {"type": "TEXT"},
+	"blocking_status": {"type": "INTEGER"},
+	"raw_index": {"type": "LONG"},
+	"correlation_id": {"type": "TEXT"},
+	"co_id_server": {"type": "INTEGER"},
+	"co_id_client": {"type": "INTEGER"},
+	"destination_host": {"type": "TEXT"},
+	"machine_id": {"type": "TEXT"},
+	"details": {"type": "TEXT"},
+	"description": {"type": "TEXT"},
+	"site_id": {"type": "INTEGER"},
+	"ipgl_client_country": {"type": "TEXT"},
+	"ipgl_client_region": {"type": "TEXT"},
+	"ipgl_client_city": {"type": "TEXT"},
+	"ipgl_client_postal_code": {"type": "TEXT"},
+	"ipgl_client_longitude": {"type": "FLOAT"},
+	"ipgl_client_latitude": {"type": "FLOAT"},
+	"ipgl_client_isp_name": {"type": "TEXT"},
+	"ipgl_client_organization_name": {"type": "TEXT"},
+	"ipgl_client_autonomous_system_number": {"type": "LONG"},
+	"ipgl_client_autonomous_system_name": {"type": "TEXT"},
+	"ipgl_server_country": {"type": "TEXT"},
+	"ipgl_server_region": {"type": "TEXT"},
+	"ipgl_server_city": {"type": "TEXT"},
+	"ipgl_server_postal_code": {"type": "TEXT"},
+	"ipgl_server_longitude": {"type": "FLOAT"},
+	"ipgl_server_latitude": {"type": "FLOAT"},
+	"ipgl_server_isp_name": {"type": "TEXT"},
+	"ipgl_server_organization_name": {"type": "TEXT"},
+	"ipgl_server_autonomous_system_number": {"type": "LONG"},
+	"ipgl_server_autonomous_system_name": {"type": "TEXT"}
+
+	            }
+            }
+        }
+    
+    }
+}
