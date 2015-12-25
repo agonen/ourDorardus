@@ -8,7 +8,7 @@ gp_host ="10.168.251.134"
 for k in psycopg2.extensions.string_types.keys():
     del psycopg2.extensions.string_types[k]
 
-batch_size=20000
+batch_size=10000
 conn = psycopg2.connect(dsn="dbname=merit user=gpadmin password=changeme host="+gp_host,cursor_factory=NamedTupleCursor)
 cur = conn.cursor("dordauscursor")
 cur.itersize=batch_size
@@ -18,10 +18,9 @@ cur.execute("select alert_id, alert_start_time, insert_time, attack_name, attack
 print "copy from {0} batch size {1}".format(gp_host,batch_size)
 flash = 0
 index = 0
+insert_list = []
 for i in cur:
-    index +=1
     flash +=1
-    insert_list = []
     j={"doc": {"_table": "Alerts"}}
     j["doc"]["alert_id"]= i.alert_id
     if i.alert_start_time is not None:
@@ -154,12 +153,14 @@ for i in cur:
       j["doc"]["ipgl_server_autonomous_system_name"] = i.ipgl_server_autonomous_system_name
 
     insert_list.append(j)
-    batch_cmd = {"batch" : {"docs": insert_list}}
    # print batch_cmd
-    if flash>batch_size:
+    if flash>=batch_size:
+      batch_cmd = {"batch" : {"docs": insert_list}}
       resp = requests.post(url='http://10.164.6.171:1123/TTLP/shard2',headers={'Content-Type': 'application/json'},json=batch_cmd)
       resp = requests.post(url='http://10.164.6.171:1123/TTLP/_shards/shard2',headers={'Content-Type': 'application/json'})
+      insert_list = []
       print "{0}:Iteration: {1}, Num of records per Iteration {2}, Msg {3}".format(time.strftime("%H:%M:%S"),index, batch_size, resp.raise_for_status())
       flash=0
+      index += 1
 
 
