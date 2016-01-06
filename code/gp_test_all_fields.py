@@ -1,6 +1,7 @@
 import psycopg2,requests,time
 from psycopg2.extras import NamedTupleCursor
 
+
 gp_host ="10.168.251.134"
 
 
@@ -8,17 +9,18 @@ gp_host ="10.168.251.134"
 for k in psycopg2.extensions.string_types.keys():
     del psycopg2.extensions.string_types[k]
 
-batch_size=10000
+batch_size=100000
 conn = psycopg2.connect(dsn="dbname=merit user=gpadmin password=changeme host="+gp_host,cursor_factory=NamedTupleCursor)
 cur = conn.cursor("dordauscursor")
 cur.itersize=batch_size
-cur.execute("select alert_id, alert_start_time, insert_time, attack_name, attack_status, bandwidth, class_type, context, delivery_method, destination_email, destination_ip, destination_ip6, destination_port, file_mime_type, file_name, hash_id, packet_count, policy_name, protocol, reference_cve, risk, sid, sid_rev, source_email, source_ip, source_ip6, source_port, alert_type, bl_direction, category, co_id, confidence, device_ip, device_name, malware_name, blocking_status, raw_index, correlation_id, co_id_server, co_id_client, destination_host, machine_id, details, description, site_id, ipgl_client_country, ipgl_client_region, ipgl_client_city, ipgl_client_postal_code, ipgl_client_longitude, ipgl_client_latitude, ipgl_client_isp_name, ipgl_client_organization_name, ipgl_client_autonomous_system_number, ipgl_client_autonomous_system_name, ipgl_server_country, ipgl_server_region, ipgl_server_city, ipgl_server_postal_code, ipgl_server_longitude, ipgl_server_latitude, ipgl_server_isp_name, ipgl_server_organization_name, ipgl_server_autonomous_system_number, ipgl_server_autonomous_system_name from dbo.alerts;")
+cur.execute("select alert_id, alert_start_time, insert_time, attack_name, attack_status, bandwidth, class_type, context, delivery_method, destination_email, destination_ip, destination_ip6, destination_port, file_mime_type, file_name, hash_id, packet_count, policy_name, protocol, reference_cve, risk, sid, sid_rev, source_email, source_ip, source_ip6, source_port, alert_type, bl_direction, category, co_id, confidence, device_ip, device_name, malware_name, blocking_status, raw_index, correlation_id, co_id_server, co_id_client, destination_host, machine_id, details, description, site_id, ipgl_client_country, ipgl_client_region, ipgl_client_city, ipgl_client_postal_code, ipgl_client_longitude, ipgl_client_latitude, ipgl_client_isp_name, ipgl_client_organization_name, ipgl_client_autonomous_system_number, ipgl_client_autonomous_system_name, ipgl_server_country, ipgl_server_region, ipgl_server_city, ipgl_server_postal_code, ipgl_server_longitude, ipgl_server_latitude, ipgl_server_isp_name, ipgl_server_organization_name, ipgl_server_autonomous_system_number, ipgl_server_autonomous_system_name from dbo.alerts_new;")
 
 
 print "copy from {0} batch size {1}".format(gp_host,batch_size)
 flash = 0
 index = 0
 insert_list = []
+start_time = time.time()
 for i in cur:
     flash +=1
     j={"doc": {"_table": "Alerts"}}
@@ -153,13 +155,21 @@ for i in cur:
       j["doc"]["ipgl_server_autonomous_system_name"] = i.ipgl_server_autonomous_system_name
 
     insert_list.append(j)
-   # print batch_cmd
+   # Print batch_cmd !!!
     if flash>=batch_size:
+      now_time = time.time()
+      print "Prepare list (cursor) time: {0}".format(now_time - start_time)
       batch_cmd = {"batch" : {"docs": insert_list}}
-      resp = requests.post(url='http://10.164.6.171:1123/TTLP/shard2',headers={'Content-Type': 'application/json'},json=batch_cmd)
-      resp = requests.post(url='http://10.164.6.171:1123/TTLP/_shards/shard2',headers={'Content-Type': 'application/json'})
+     
+#      print "sending batch",batch_cmd
+      resp1 = requests.post(url='http://localhost:1123/TTLP/shard5',headers={'Content-Type': 'application/json'},json=batch_cmd)
+      now2_time = time.time()
+      print "Posting BATCH INSERT request time: {0}".format(now2_time - now_time)
+      resp = requests.post(url='http://localhost:1123/TTLP/_shards/shard5',headers={'Content-Type': 'application/json'})
+      print "Posting BATCH MERGE request time: {0}".format(time.time() - now2_time)
       insert_list = []
-      print "{0}:Iteration: {1}, Num of records per Iteration {2}, Msg {3}".format(time.strftime("%H:%M:%S"),index, batch_size, resp.raise_for_status())
+      start_time = time.time()
+      print "{0}:Iteration: {1}, Num of records per Iteration {2}, Msg {3}".format(time.strftime("%H:%M:%S"),index, batch_size, resp1.raise_for_status())
       flash=0
       index += 1
 
