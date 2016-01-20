@@ -1,4 +1,4 @@
-import psycopg2,requests,time
+import psycopg2,requests,time,sys,thread
 from psycopg2.extras import NamedTupleCursor
 
 
@@ -9,7 +9,22 @@ gp_host ="10.168.251.134"
 for k in psycopg2.extensions.string_types.keys():
     del psycopg2.extensions.string_types[k]
 
-batch_size=100000
+
+
+def Merge_shards():
+       var = 1
+       while var == 1 :
+            time.sleep( 3600   )
+            print "{0} - Going to merge".format(time.strftime('%X %x'))
+            start_time = time.time() 
+            resp = requests.post(url='http://localhost:1123/TTLP/_shards/shard6',headers={'Content-Type': 'application/json'})
+            print "{0}  ********* Posting BATCH MERGE, request time: {1}".format( time.time(), start_time - time())
+ 
+
+
+thread.start_new_thread(Merge_shards, ())
+
+batch_size=60000
 conn = psycopg2.connect(dsn="dbname=merit user=gpadmin password=changeme host="+gp_host,cursor_factory=NamedTupleCursor)
 cur = conn.cursor("dordauscursor")
 cur.itersize=batch_size
@@ -19,6 +34,7 @@ cur.execute("select alert_id, alert_start_time, insert_time, attack_name, attack
 print "copy from {0} batch size {1}".format(gp_host,batch_size)
 flash = 0
 index = 0
+merge_index = 1
 insert_list = []
 start_time = time.time()
 for i in cur:
@@ -162,15 +178,21 @@ for i in cur:
       batch_cmd = {"batch" : {"docs": insert_list}}
      
 #      print "sending batch",batch_cmd
-      resp1 = requests.post(url='http://localhost:1123/TTLP/shard5',headers={'Content-Type': 'application/json'},json=batch_cmd)
+      resp1 = requests.post(url='http://localhost:1123/TTLP/shard1',headers={'Content-Type': 'application/json'},json=batch_cmd)
       now2_time = time.time()
       print "Posting BATCH INSERT request time: {0}".format(now2_time - now_time)
-      resp = requests.post(url='http://localhost:1123/TTLP/_shards/shard5',headers={'Content-Type': 'application/json'})
-      print "Posting BATCH MERGE request time: {0}".format(time.time() - now2_time)
+#      merge_index +=1
+#      if merge_index >= 20:
+#        resp = requests.post(url='http://localhost:1123/TTLP/_shards/shard6',headers={'Content-Type': 'application/json'})
+#        print "********* Posting BATCH MERGE - size: {0}, request time: {1}".format(10 * batch_size, time.time() - now2_time)
+#        merge_index = 1
       insert_list = []
       start_time = time.time()
       print "{0}:Iteration: {1}, Num of records per Iteration {2}, Msg {3}".format(time.strftime("%H:%M:%S"),index, batch_size, resp1.raise_for_status())
       flash=0
       index += 1
+      sys.stdout.flush()
 
+
+       
 
